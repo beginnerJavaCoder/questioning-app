@@ -1,6 +1,6 @@
 package com.example.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class User {
     these questionnaires by another users of the system.
      */
     @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST)
-    @JsonBackReference
+    @JsonManagedReference
     private List<Questionnaire> userCreatedQuestionnaires;
 
     /*

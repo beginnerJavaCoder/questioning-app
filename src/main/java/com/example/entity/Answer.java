@@ -1,6 +1,6 @@
 package com.example.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
@@ -20,7 +20,7 @@ public class Answer {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Question sourceQuestion;
 
     public Answer() { }

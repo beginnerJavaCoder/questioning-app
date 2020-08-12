@@ -20,7 +20,7 @@ public class Question {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "questionnaire_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Questionnaire sourceQuestionnaire;
 
     /*
@@ -28,7 +28,7 @@ public class Question {
     to itself. List "answerOption" represents these answers
      */
     @OneToMany(mappedBy = "sourceQuestion", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
+    @JsonManagedReference
     private List<Answer> answerOptions;
 
     public Question() {

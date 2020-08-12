@@ -19,11 +19,11 @@ public class Questionnaire {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @JsonManagedReference
+    @JsonBackReference
     private User author;
 
     @OneToMany(mappedBy = "sourceQuestionnaire", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
+    @JsonManagedReference
     private List<Question> questions;
 
     public Questionnaire() {
