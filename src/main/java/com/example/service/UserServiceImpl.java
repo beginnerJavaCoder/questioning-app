@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.entity.Questionnaire;
 import com.example.entity.User;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Integer userId) {
+        User candidateToRemove = this.getUser(userId);
+        List<Questionnaire> questionnaires = candidateToRemove.getUserCreatedQuestionnaires();
+        if (questionnaires != null) {
+            for (Questionnaire q : questionnaires) {
+                q.setAuthor(null);
+            }
+        }
+        
         userRepository.deleteById(userId);
     }
 
