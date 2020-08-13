@@ -7,7 +7,8 @@ public class QuestionnaireForm {
 
     private String name;
     private String description;
-
+    //TODO field author will be unnecessary after adding security module
+    // - DELETE THIS
     private User author;
 
     public QuestionnaireForm() { }
@@ -61,5 +62,4 @@ public class QuestionnaireForm {
     public void setAuthor(User author) {
         this.author = author;
     }
-
 }
