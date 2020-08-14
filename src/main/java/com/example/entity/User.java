@@ -8,11 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class User extends Model {
 
     /*
     name != future login
@@ -55,14 +51,6 @@ public class User {
     public void removeUserCreatedQuestionnaire(Questionnaire questionnaire) {
         userCreatedQuestionnaires.remove(questionnaire);
         questionnaire.setAuthor(null);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

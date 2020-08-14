@@ -9,10 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "questionnaires")
-public class Questionnaire {
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class Questionnaire extends Model {
 
     private String name;
     private String description;
@@ -48,14 +45,6 @@ public class Questionnaire {
     public void removeQuestion(Question question) {
         questions.remove(question);
         question.setSourceQuestionnaire(null);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

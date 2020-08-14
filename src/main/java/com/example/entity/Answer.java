@@ -6,10 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "answers")
-public class Answer {
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class Answer extends Model {
 
     private String description;
 
@@ -24,14 +21,6 @@ public class Answer {
     private Question sourceQuestion;
 
     public Answer() { }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getDescription() {
         return description;

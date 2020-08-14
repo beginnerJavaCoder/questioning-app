@@ -9,10 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "questions")
-public class Question {
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class Question extends Model {
     /*
     Description is the wording of the question itself
      */
@@ -46,14 +43,6 @@ public class Question {
     public void removeAnswer(Answer answer) {
         answerOptions.remove(answer);
         answer.setSourceQuestion(null);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getDescription() {
