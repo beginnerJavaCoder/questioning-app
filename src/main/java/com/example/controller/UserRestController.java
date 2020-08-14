@@ -40,7 +40,11 @@ public class UserRestController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 new ResponseEntity<>(user, HttpStatus.OK);
     }
-
+    /*
+    TODO: probably, i should return not entities but *Form classes in ALL controllers,
+     because full entity contains large useless info (useful, but not on client side).
+     It will be more clear when I will implement Security Layer.
+     */
     @PostMapping(value = "/create")
     public ResponseEntity<User> createUser(@RequestBody UserForm userForm) {
         User user = userForm.composeUser();
