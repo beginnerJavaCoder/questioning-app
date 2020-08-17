@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User extends Model {
+public class User extends Model implements UserDetails {
 
     /*
     Nickname which will be visible to other users of the app
@@ -76,6 +77,40 @@ public class User extends Model {
         questionnaire.setAuthor(null);
     }
 
+    @Override
+    public boolean isEnabled() {
+        return status == Status.ACTIVE;
+    }
+
+    /*
+    Realization isn't provided
+     */
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    /*
+    Realization isn't provided
+     */
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    /*
+    Realization isn't provided
+    */
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public List<Role> getAuthorities() {
+        return roles;
+    }
+
     public String getName() {
         return name;
     }
@@ -84,6 +119,7 @@ public class User extends Model {
         this.name = name;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -92,6 +128,7 @@ public class User extends Model {
         this.username = username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
