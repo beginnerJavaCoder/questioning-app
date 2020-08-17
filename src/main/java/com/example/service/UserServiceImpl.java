@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.entity.Questionnaire;
+import com.example.entity.Status;
 import com.example.entity.User;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,17 +70,15 @@ public class UserServiceImpl implements UserService {
         userRepository.saveAndFlush(current);
     }
 
+    /*
+    Deletion of an user not delete any his information,
+    because it may be valuable for statistics or user account's recovery
+     */
     @Override
     public void delete(Integer userId) {
         User candidateToRemove = this.getUser(userId);
-        List<Questionnaire> questionnaires = candidateToRemove.getUserCreatedQuestionnaires();
-        if (questionnaires != null) {
-            for (Questionnaire q : questionnaires) {
-                q.setAuthor(null);
-            }
-        }
-        
-        userRepository.deleteById(userId);
+        candidateToRemove.setStatus(Status.DELETED);
+        userRepository.save(candidateToRemove);
     }
 
     @Override
