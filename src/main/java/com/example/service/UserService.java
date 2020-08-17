@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void create(User user);
+    User register(User user);
 
     void delete(Integer userId);
 
@@ -15,6 +15,10 @@ public interface UserService {
     User getUser(Integer userId);
 
     User getUser(User user);
+
+    boolean isUsernameAlreadyExists(String username);
+
+    User findByUsername(String username);
 
     void renameUser(Integer userId, String newName);
 }

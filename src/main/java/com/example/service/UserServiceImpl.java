@@ -5,6 +5,7 @@ import com.example.entity.User;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,21 +13,48 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    /*
+    passwordEncoder used for hashing passwords those will be saved in the DB.
+    It means that passwords in their raw form will not be saved in the database.
+     */
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    /*
+    Checks if user with user.username already exists. In this case returns null.
+    If db has no user with such a username, then hashes user's password and saves user into db.
+    Returns saved user.
+     */
+    @Override
+    public User register(User user) {
+        if(isUsernameAlreadyExists(user.getUsername())) {
+            return null;
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return userRepository.saveAndFlush(user);
     }
 
     @Override
-    public void create(User user) {
-        userRepository.saveAndFlush(user);
+    public boolean isUsernameAlreadyExists(String username) {
+        return this.findByUsername(username) != null;
     }
 
     @Override
     public User getUser(User user) {
         return userRepository.findOne(Example.of(user)).orElse(null);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
