@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.security.jwt;
 
 import com.example.entity.User;
 import com.example.service.UserService;

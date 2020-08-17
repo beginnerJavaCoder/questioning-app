@@ -17,21 +17,36 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
+/*
+This class provides functionality for working with JWT tokens.
+ */
 @Component
 public class JwtTokenProvider {
 
+    /*
+    secret string that uses for signing tokens
+     */
     private String secret;
+    private final String tokenPrefix;
+    /*
+    at this moment, all access-tokens after its creation have 1 hour validity
+     */
     private final long validityInMilliseconds;
     private final UserDetailsService userDetailsService;
 
     public JwtTokenProvider(@Value("${jwt.token.secret}") String secret,
+                            @Value("${jwt.token.prefix}") String tokenPrefix,
                             @Value("${jwt.token.validity}") long validityInMilliseconds,
                             @Autowired UserDetailsService userDetailsService) {
         this.secret = secret;
+        this.tokenPrefix = tokenPrefix;
         this.validityInMilliseconds = validityInMilliseconds;
         this.userDetailsService = userDetailsService;
     }
 
+    /*
+    before using, secret word needs to encode into base64 state
+     */
     @PostConstruct
     protected void init() {
         secret = Base64.getEncoder().encodeToString(secret.getBytes());
@@ -66,7 +81,7 @@ public class JwtTokenProvider {
 
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+        if (bearerToken != null && bearerToken.startsWith(tokenPrefix)) {
             return bearerToken.substring(7);
         }
 

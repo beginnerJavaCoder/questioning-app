@@ -19,6 +19,7 @@ public class JwtTokenFilter extends GenericFilterBean {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
+    //FIXME: improve excluding /register and /login pages from filtration
     @Override
     public void doFilter(ServletRequest servletRequest,
                          ServletResponse servletResponse,
@@ -29,9 +30,11 @@ public class JwtTokenFilter extends GenericFilterBean {
 
         if(!(url.toString().equals("http://localhost:8080/register") ||
                 url.toString().equals("http://localhost:8080/login"))) {
+
             String token = jwtTokenProvider.resolveToken(httpServletRequest);
 
             if (token != null & jwtTokenProvider.validateToken(token)) {
+
                 Authentication authentication = jwtTokenProvider.getAuthentication(token);
 
                 if (authentication != null) {
