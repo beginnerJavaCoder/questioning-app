@@ -2,20 +2,17 @@ package com.example.form;
 
 import com.example.entity.User;
 
-//TODO think about deletion this class
-public class UserForm {
+public class RegistrationForm {
 
     private String name;
+
     private String username;
     private String password;
 
-    public UserForm() { }
+    public RegistrationForm() { }
 
     /*
-    This method parses "UserForm" object to normal entity "User".
-    At this moment, creating entity gets only name from object UserForm.
-    Hibernate provides @id. And list of all questionnaires, created by this user,
-    initializing as empty ArrayList<Questionnaire>.
+    This method parses "RegistrationForm" object to normal entity "User".
      */
     public User composeUser() {
         User user = new User();
