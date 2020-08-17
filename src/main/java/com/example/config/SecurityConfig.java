@@ -1,6 +1,6 @@
 package com.example.config;
 
-import com.example.security.jwt.JwtConfigurer;
+import com.example.security.jwt.JwtTokenFilter;
 import com.example.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -31,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    //TODO allow non-registered users access to /registration or /register page - I can't create new user right now!!!
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -42,8 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(REGISTRATION_ENDPOINT, LOGIN_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .apply(new JwtConfigurer(jwtTokenProvider));
+                .anyRequest().authenticated();
+
+        http.addFilterBefore(new JwtTokenFilter(jwtTokenProvider),
+                        UsernamePasswordAuthenticationFilter.class);
     }
 }
