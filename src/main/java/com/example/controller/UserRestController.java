@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+/*
+TODO: some of logic must be allowed only for admin panel, some for all users
+ */
 @RestController
 @RequestMapping("/user")
 public class UserRestController {
@@ -39,18 +43,6 @@ public class UserRestController {
         return user == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 new ResponseEntity<>(user, HttpStatus.OK);
-    }
-    /*
-    TODO: probably, i should return not entities but *Form classes in ALL controllers,
-     because full entity contains large useless info (useful, but not on client side).
-     It will be more clear when I will implement Security Layer.
-     */
-    @PostMapping(value = "/create")
-    public ResponseEntity<User> createUser(@RequestBody UserForm userForm) {
-        User user = userForm.composeUser();
-        userService.create(user);
-
-        return new ResponseEntity<>(userService.getUser(user), HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/delete/{id}")
