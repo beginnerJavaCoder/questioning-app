@@ -22,6 +22,14 @@ public class User extends Model {
     password will be saved in DB in hashed form
      */
     private String password;
+    /*
+    Property that shows, in which state account is now.
+    By default, each account creating with status ACTIVE.
+    Deletion of account changes its status on DELETED,
+    but all information in DB remains intact.
+     */
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     /*
     This list contains all privileges of the user
@@ -42,9 +50,10 @@ public class User extends Model {
     private List<Questionnaire> userCreatedQuestionnaires;
 
     public User() {
-        userCreatedQuestionnaires = new ArrayList<>();
+        status = Status.ACTIVE;
         roles = new ArrayList<>();
         roles.add(Role.USER);
+        userCreatedQuestionnaires = new ArrayList<>();
     }
 
     /*
@@ -89,6 +98,14 @@ public class User extends Model {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public List<Role> getRoles() {
