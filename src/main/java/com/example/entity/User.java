@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -78,6 +79,7 @@ public class User extends Model implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return status == Status.ACTIVE;
     }
@@ -86,6 +88,7 @@ public class User extends Model implements UserDetails {
     Realization isn't provided
      */
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
@@ -94,6 +97,7 @@ public class User extends Model implements UserDetails {
     Realization isn't provided
      */
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
@@ -102,11 +106,13 @@ public class User extends Model implements UserDetails {
     Realization isn't provided
     */
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public List<Role> getAuthorities() {
         return roles;
     }
@@ -129,6 +135,7 @@ public class User extends Model implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
