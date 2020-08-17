@@ -4,24 +4,22 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User extends Model {
 
     /*
-    Username/nickname which will be visible to other users of the app
+    Nickname which will be visible to other users of the app
      */
     private String name;
     /*
     Unique credential that in common way may be user's email
      */
-    private String login;
+    private String username;
     /*
-    TODO: Take care about this field won't store open in DB
+    password will be saved in DB in hashed form
      */
     private String password;
 
@@ -31,7 +29,7 @@ public class User extends Model {
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_id")})
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private List<Role> roles;
 
     /*
     Property CascadeType.PERSIST instead CascadeType.ALL uses,
@@ -43,12 +41,9 @@ public class User extends Model {
     @JsonManagedReference
     private List<Questionnaire> userCreatedQuestionnaires;
 
-    /*
-    Is this a bad practice? If yes, where can I initialize lists in entities?
-     */
     public User() {
         userCreatedQuestionnaires = new ArrayList<>();
-        roles = new HashSet<>();
+        roles = new ArrayList<>();
         roles.add(Role.USER);
     }
 
@@ -80,12 +75,12 @@ public class User extends Model {
         this.name = name;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -96,11 +91,11 @@ public class User extends Model {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
