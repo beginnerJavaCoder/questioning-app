@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.entity.questionnaire.Category;
 import com.example.entity.questionnaire.Questionnaire;
 import com.example.form.QuestionnaireCreationForm;
 import com.example.form.QuestionnairePassingForm;
@@ -55,6 +56,16 @@ public class QuestionnaireRestController {
         response.put("rightAnswers", String.valueOf(quantityOfRightAnswers));
 
         return ResponseEntity.ok(response);
+    }
+
+    /*
+    this mapping has 2 methods because user, before he create any questionnaire,
+    must go to /create page, where works GET method, which returns all necessary
+    instruments for questionnaire creation (including possible categories of questionnaires)
+     */
+    @GetMapping(value = "/create")
+    public ResponseEntity getPossibleQuestionnaireCategories() {
+        return ResponseEntity.ok(Category.values());
     }
 
     @PostMapping(value = "/create")

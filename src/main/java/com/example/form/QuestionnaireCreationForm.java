@@ -1,11 +1,13 @@
 package com.example.form;
 
+import com.example.entity.questionnaire.Category;
 import com.example.entity.questionnaire.Questionnaire;
 
 public class QuestionnaireCreationForm {
 
     private String name;
     private String description;
+    private String category;
     /*
     probably, in the future, I will transmit to backend only user's id
      */
@@ -27,6 +29,7 @@ public class QuestionnaireCreationForm {
         Questionnaire questionnaire = new Questionnaire();
         questionnaire.setName(name);
         questionnaire.setDescription(description);
+        questionnaire.setCategory(Category.valueOf(category));
 
         return questionnaire;
     }
@@ -45,6 +48,14 @@ public class QuestionnaireCreationForm {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getAuthorUsername() {

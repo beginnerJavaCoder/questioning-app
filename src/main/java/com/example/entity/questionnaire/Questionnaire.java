@@ -16,6 +16,9 @@ public class Questionnaire extends Model {
     private String name;
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonBackReference
@@ -63,6 +66,14 @@ public class Questionnaire extends Model {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public User getAuthor() {
