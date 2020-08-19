@@ -2,13 +2,16 @@ package com.example.controller;
 
 import com.example.entity.Questionnaire;
 import com.example.form.QuestionnaireForm;
+import com.example.form.QuestionnairePassingForm;
 import com.example.service.QuestionnaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/questionnaire")
@@ -39,6 +42,16 @@ public class QuestionnaireRestController {
         return questionnaire == null ?
                 new ResponseEntity<>(HttpStatus.NOT_FOUND) :
                 new ResponseEntity<>(questionnaire, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/{id}/passing")
+    public ResponseEntity questionnairePassing(@PathVariable Integer id,
+                                               @RequestBody QuestionnairePassingForm form) {
+        int quantityOfRightAnswers = questionnaireService.getQuantityOfRightAnswers(id, form.getUserAnswers());
+        Map<String, String> response = new HashMap<>();
+        response.put("rightAnswers", String.valueOf(quantityOfRightAnswers));
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping(value = "/create")
