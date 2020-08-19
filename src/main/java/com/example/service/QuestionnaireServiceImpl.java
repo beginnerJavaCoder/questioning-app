@@ -1,5 +1,7 @@
 package com.example.service;
 
+import com.example.entity.Answer;
+import com.example.entity.Question;
 import com.example.entity.Questionnaire;
 import com.example.repository.QuestionnaireRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,25 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     @Autowired
     public QuestionnaireServiceImpl(QuestionnaireRepository questionnaireRepository) {
         this.questionnaireRepository = questionnaireRepository;
+    }
+
+    @Override
+    public int getQuantityOfRightAnswers(int questionnaireId, boolean[][] userAnswers) {
+        Questionnaire questionnaire = getQuestionnaire(questionnaireId);
+        List<Question> questions = questionnaire.getQuestions();
+        int quantityOfRightAnswers = questions.size();
+
+        for (int i = 0; i < userAnswers.length; i++) {
+            List<Answer> answerOptions = questions.get(i).getAnswerOptions();
+            for (int j = 0; j < userAnswers[i].length; j++) {
+                if (answerOptions.get(j).isCorrect() != userAnswers[i][j]) {
+                    quantityOfRightAnswers--;
+                    break;
+                }
+            }
+        }
+
+        return quantityOfRightAnswers;
     }
 
     @Override

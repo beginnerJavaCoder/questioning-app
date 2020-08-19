@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface QuestionnaireService {
 
+    int getQuantityOfRightAnswers(int QuestionnaireId, boolean[][] userAnswers);
+
     void create(Questionnaire questionnaire);
 
     void delete(Integer id);
