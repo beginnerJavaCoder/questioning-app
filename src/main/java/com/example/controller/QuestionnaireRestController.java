@@ -1,9 +1,11 @@
 package com.example.controller;
 
 import com.example.entity.Questionnaire;
-import com.example.form.QuestionnaireForm;
+import com.example.entity.User;
+import com.example.form.QuestionnaireCreationForm;
 import com.example.form.QuestionnairePassingForm;
 import com.example.service.QuestionnaireService;
+import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +19,13 @@ import java.util.Map;
 @RequestMapping("/questionnaire")
 public class QuestionnaireRestController {
 
-    QuestionnaireService questionnaireService;
+    private final QuestionnaireService questionnaireService;
+    private final UserService userService;
 
     @Autowired
-    public QuestionnaireRestController(QuestionnaireService questionnaireService) {
+    public QuestionnaireRestController(QuestionnaireService questionnaireService, UserService userService) {
         this.questionnaireService = questionnaireService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -55,11 +59,12 @@ public class QuestionnaireRestController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<Questionnaire> createQuestionnaire(@RequestBody QuestionnaireForm questionnaireForm) {
-        Questionnaire questionnaire = questionnaireForm.composeQuestionnaire();
+    public ResponseEntity<Questionnaire> createQuestionnaire(@RequestBody QuestionnaireCreationForm form) {
+        Questionnaire questionnaire = form.composeQuestionnaire();
         questionnaireService.create(questionnaire);
+        userService.addUserCreatedQuestionnaire(form.getAuthorUsername(), questionnaire);
 
-        return new ResponseEntity<>(questionnaireService.getQuestionnaire(questionnaire), HttpStatus.CREATED);
+        return new ResponseEntity<>(questionnaire, HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/delete/{id}")

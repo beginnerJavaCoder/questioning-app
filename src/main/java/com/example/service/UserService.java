@@ -1,10 +1,13 @@
 package com.example.service;
 
+import com.example.entity.Questionnaire;
 import com.example.entity.User;
 
 import java.util.List;
 
 public interface UserService {
+
+    void addUserCreatedQuestionnaire(String username, Questionnaire questionnaire);
 
     User register(User user);
 

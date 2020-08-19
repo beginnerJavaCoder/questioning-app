@@ -3,15 +3,16 @@ package com.example.form;
 import com.example.entity.Questionnaire;
 import com.example.entity.User;
 
-public class QuestionnaireForm {
+public class QuestionnaireCreationForm {
 
     private String name;
     private String description;
-    //TODO field author will be unnecessary after adding security module
-    // - DELETE THIS
-    private User author;
+    /*
+    probably, in the future, I will transmit to backend only user's id
+     */
+    private String authorUsername;
 
-    public QuestionnaireForm() { }
+    public QuestionnaireCreationForm() { }
 
     /*
     This method parses "QuestionnaireForm" object to common entity "Questionnaire".
@@ -20,13 +21,6 @@ public class QuestionnaireForm {
     information about author adds by method addUserCreatedQuestionnaire(Questionnaire q)
     - watch realization in com.example.entity.User.
 
-    WARNING! At this moment, it necessarily to point author of questionnaire (when you
-    create new questionnaire from POST request) BY YOUR HANDS! In another way, author of
-    questionnaire will be null :( It happens, because the application hasn't security
-    module. After security will be installed, only authorized users will be able to
-    create questionnaires and field "author" will filling automatically by current
-    user, logged in system.
-
     List of all questions for this questionnaire initialize like empty ArrayList<Question>
     in com.example.entity.Questionnaire;
      */
@@ -34,7 +28,6 @@ public class QuestionnaireForm {
         Questionnaire questionnaire = new Questionnaire();
         questionnaire.setName(name);
         questionnaire.setDescription(description);
-        author.addUserCreatedQuestionnaire(questionnaire);
 
         return questionnaire;
     }
@@ -55,11 +48,11 @@ public class QuestionnaireForm {
         this.description = description;
     }
 
-    public User getAuthor() {
-        return author;
+    public String getAuthorUsername() {
+        return authorUsername;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
+    public void setAuthorUsername(String authorUsername) {
+        this.authorUsername = authorUsername;
     }
 }

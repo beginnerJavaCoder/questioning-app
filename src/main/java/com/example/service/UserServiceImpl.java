@@ -27,11 +27,18 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Override
+    public void addUserCreatedQuestionnaire(String username, Questionnaire questionnaire) {
+        User author = findByUsername(username);
+        author.addUserCreatedQuestionnaire(questionnaire);
+        userRepository.save(author);
+    }
+
     /*
-    Checks if user with user.username already exists. In this case returns null.
-    If db has no user with such a username, then hashes user's password and saves user into db.
-    Returns saved user.
-     */
+        Checks if user with user.username already exists. In this case returns null.
+        If db has no user with such a username, then hashes user's password and saves user into db.
+        Returns saved user.
+         */
     @Override
     public User register(User user) {
         if(isUsernameAlreadyExists(user.getUsername())) {
