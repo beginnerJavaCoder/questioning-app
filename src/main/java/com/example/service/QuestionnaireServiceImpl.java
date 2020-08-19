@@ -14,14 +14,21 @@ import java.util.List;
 public class QuestionnaireServiceImpl implements QuestionnaireService {
 
     QuestionnaireRepository questionnaireRepository;
+    UserService userService;
 
     @Autowired
-    public QuestionnaireServiceImpl(QuestionnaireRepository questionnaireRepository) {
+    public QuestionnaireServiceImpl(QuestionnaireRepository questionnaireRepository,
+                                    UserService userService) {
         this.questionnaireRepository = questionnaireRepository;
+        this.userService = userService;
     }
 
+    /*
+    Calculates quantity of right answers, then uses userService for
+    calculating of experience increasing.
+     */
     @Override
-    public int getQuantityOfRightAnswers(int questionnaireId, boolean[][] userAnswers) {
+    public int getQuantityOfRightAnswers(int questionnaireId, boolean[][] userAnswers, int userId) {
         Questionnaire questionnaire = getQuestionnaire(questionnaireId);
         List<Question> questions = questionnaire.getQuestions();
         int quantityOfRightAnswers = questions.size();
@@ -36,7 +43,17 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
             }
         }
 
+        userService.increaseExperience(userId, calculateUserExperienceGain(questions.size(), quantityOfRightAnswers));
+
         return quantityOfRightAnswers;
+    }
+
+    /*
+    For each questionnaire user may increase his experience by 10 points,
+    if he answers at all questions right.
+     */
+    private int calculateUserExperienceGain(double questionsCount, double rightAnswersCount) {
+        return (int) ((rightAnswersCount / questionsCount) * 10);
     }
 
     @Override

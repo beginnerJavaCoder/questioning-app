@@ -48,10 +48,11 @@ public class QuestionnaireRestController {
                 new ResponseEntity<>(questionnaire, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/{id}/passing")
-    public ResponseEntity questionnairePassing(@PathVariable Integer id,
+    @PostMapping(value = "/{questionnaireId}/passing")
+    public ResponseEntity questionnairePassing(@PathVariable Integer questionnaireId,
                                                @RequestBody QuestionnairePassingForm form) {
-        int quantityOfRightAnswers = questionnaireService.getQuantityOfRightAnswers(id, form.getUserAnswers());
+        int quantityOfRightAnswers = questionnaireService.getQuantityOfRightAnswers(questionnaireId,
+                form.getUserAnswers(), form.getUserId());
         Map<String, String> response = new HashMap<>();
         response.put("rightAnswers", String.valueOf(quantityOfRightAnswers));
 

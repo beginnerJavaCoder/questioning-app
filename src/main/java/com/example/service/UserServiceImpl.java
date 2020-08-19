@@ -77,6 +77,13 @@ public class UserServiceImpl implements UserService {
         userRepository.saveAndFlush(current);
     }
 
+    @Override
+    public void increaseExperience(int userId, int experienceGain) {
+        User user = getUser(userId);
+        user.addExperience(experienceGain);
+        userRepository.save(user);
+    }
+
     /*
     Deletion of an user not delete any his information,
     because it may be valuable for statistics or user account's recovery

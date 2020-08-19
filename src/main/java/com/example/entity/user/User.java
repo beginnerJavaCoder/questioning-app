@@ -36,6 +36,21 @@ public class User extends Model implements UserDetails {
     private Status status;
 
     /*
+    total amount of user's experience
+     */
+    private Integer experience;
+
+    /*
+    This is upper bound of experience to achieve next level.
+    It increases after each level achievement.
+     */
+    private Integer nextLevelExperienceBound;
+    /*
+    level has no bounds at this moment
+     */
+    private Integer level;
+
+    /*
     This list contains all privileges of the user
      */
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -58,6 +73,23 @@ public class User extends Model implements UserDetails {
         roles = new ArrayList<>();
         roles.add(Role.USER);
         userCreatedQuestionnaires = new ArrayList<>();
+        experience = 0;
+        level = 0;
+        nextLevelExperienceBound = 4;
+    }
+
+    /*
+    Contains checks for next level and new user's role.
+     */
+    public void addExperience(int experienceGain) {
+        experience += experienceGain;
+        if (experience >= nextLevelExperienceBound) {
+            level++;
+            nextLevelExperienceBound += 4 + level * 4;
+        }
+        if (level == 10 && !roles.contains(Role.CREATOR)) {
+            roles.add(Role.CREATOR);
+        }
     }
 
     /*
@@ -152,6 +184,30 @@ public class User extends Model implements UserDetails {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Integer getExperience() {
+        return experience;
+    }
+
+    public void setExperience(Integer experience) {
+        this.experience = experience;
+    }
+
+    public Integer getNextLevelExperienceBound() {
+        return nextLevelExperienceBound;
+    }
+
+    public void setNextLevelExperienceBound(Integer nextLevelExperienceBound) {
+        this.nextLevelExperienceBound = nextLevelExperienceBound;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public List<Role> getRoles() {

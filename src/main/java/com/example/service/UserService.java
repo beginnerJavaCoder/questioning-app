@@ -24,4 +24,6 @@ public interface UserService {
     User findByUsername(String username);
 
     void renameUser(Integer userId, String newName);
+
+    void increaseExperience(int userId, int experienceGain);
 }

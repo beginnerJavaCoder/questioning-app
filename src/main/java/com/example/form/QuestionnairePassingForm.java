@@ -7,6 +7,10 @@ public class QuestionnairePassingForm {
     Each answer that user mark as right, in this matrix will be boolean value 'true'.
      */
     private boolean[][] userAnswers;
+    /*
+    Id of user who passes questionnaire.
+     */
+    private Integer userId;
 
     public boolean[][] getUserAnswers() {
         return userAnswers;
@@ -14,5 +18,13 @@ public class QuestionnairePassingForm {
 
     public void setUserAnswers(boolean[][] userAnswers) {
         this.userAnswers = userAnswers;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

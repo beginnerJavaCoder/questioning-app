@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface QuestionnaireService {
 
-    int getQuantityOfRightAnswers(int QuestionnaireId, boolean[][] userAnswers);
+    int getQuantityOfRightAnswers(int QuestionnaireId, boolean[][] userAnswers, int userId);
 
     void create(Questionnaire questionnaire);
 
