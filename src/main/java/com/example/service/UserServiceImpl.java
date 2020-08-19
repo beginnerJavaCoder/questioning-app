@@ -1,8 +1,8 @@
 package com.example.service;
 
-import com.example.entity.Questionnaire;
-import com.example.entity.Status;
-import com.example.entity.User;
+import com.example.entity.questionnaire.Questionnaire;
+import com.example.entity.user.Status;
+import com.example.entity.user.User;
 import com.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;

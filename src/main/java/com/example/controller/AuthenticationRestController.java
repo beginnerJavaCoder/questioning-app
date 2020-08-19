@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.entity.User;
+import com.example.entity.user.User;
 import com.example.form.AuthenticationForm;
 import com.example.security.jwt.JwtTokenProvider;
 import com.example.service.UserService;

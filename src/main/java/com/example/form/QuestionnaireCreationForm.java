@@ -1,7 +1,6 @@
 package com.example.form;
 
-import com.example.entity.Questionnaire;
-import com.example.entity.User;
+import com.example.entity.questionnaire.Questionnaire;
 
 public class QuestionnaireCreationForm {
 
@@ -19,10 +18,10 @@ public class QuestionnaireCreationForm {
     Entity gets name, description and author from QuestionnaireForm object.
     For securing bidirectional relationship between User and Questionnaire entities,
     information about author adds by method addUserCreatedQuestionnaire(Questionnaire q)
-    - watch realization in com.example.entity.User.
+    - watch realization in com.example.entity.user.User.
 
     List of all questions for this questionnaire initialize like empty ArrayList<Question>
-    in com.example.entity.Questionnaire;
+    in com.example.entity.questionnairy.Questionnaire;
      */
     public Questionnaire composeQuestionnaire() {
         Questionnaire questionnaire = new Questionnaire();

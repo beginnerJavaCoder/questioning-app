@@ -1,5 +1,7 @@
-package com.example.entity;
+package com.example.entity.user;
 
+import com.example.entity.Model;
+import com.example.entity.questionnaire.Questionnaire;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.userdetails.UserDetails;

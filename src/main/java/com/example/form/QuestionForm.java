@@ -1,10 +1,7 @@
 package com.example.form;
 
-import com.example.entity.Answer;
-import com.example.entity.Question;
-import com.example.entity.Questionnaire;
-
-import java.util.List;
+import com.example.entity.questionnaire.Question;
+import com.example.entity.questionnaire.Questionnaire;
 
 public class QuestionForm {
 

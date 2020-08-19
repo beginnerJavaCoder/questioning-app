@@ -1,6 +1,6 @@
 package com.example.form;
 
-import com.example.entity.User;
+import com.example.entity.user.User;
 
 public class RegistrationForm {
 

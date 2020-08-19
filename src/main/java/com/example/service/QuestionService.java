@@ -1,7 +1,7 @@
 package com.example.service;
 
-import com.example.entity.Question;
-import com.example.entity.Questionnaire;
+import com.example.entity.questionnaire.Question;
+import com.example.entity.questionnaire.Questionnaire;
 
 import java.util.List;
 

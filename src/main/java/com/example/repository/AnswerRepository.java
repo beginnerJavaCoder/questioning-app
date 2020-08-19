@@ -1,7 +1,7 @@
 package com.example.repository;
 
-import com.example.entity.Answer;
-import com.example.entity.Question;
+import com.example.entity.questionnaire.Answer;
+import com.example.entity.questionnaire.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

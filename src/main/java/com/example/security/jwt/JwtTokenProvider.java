@@ -1,6 +1,6 @@
 package com.example.security.jwt;
 
-import com.example.entity.Role;
+import com.example.entity.user.Role;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

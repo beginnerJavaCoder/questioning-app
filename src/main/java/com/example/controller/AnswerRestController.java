@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.entity.Answer;
+import com.example.entity.questionnaire.Answer;
 import com.example.form.AnswerForm;
 import com.example.service.AnswerService;
 import com.example.service.QuestionService;

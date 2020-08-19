@@ -1,7 +1,7 @@
 package com.example.form;
 
-import com.example.entity.Answer;
-import com.example.entity.Question;
+import com.example.entity.questionnaire.Answer;
+import com.example.entity.questionnaire.Question;
 
 public class AnswerForm {
 

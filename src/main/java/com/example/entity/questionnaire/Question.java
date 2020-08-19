@@ -1,5 +1,6 @@
-package com.example.entity;
+package com.example.entity.questionnaire;
 
+import com.example.entity.Model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 

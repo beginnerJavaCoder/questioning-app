@@ -1,7 +1,6 @@
 package com.example.controller;
 
-import com.example.entity.Questionnaire;
-import com.example.entity.User;
+import com.example.entity.questionnaire.Questionnaire;
 import com.example.form.QuestionnaireCreationForm;
 import com.example.form.QuestionnairePassingForm;
 import com.example.service.QuestionnaireService;
