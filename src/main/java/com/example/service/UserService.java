@@ -2,10 +2,11 @@ package com.example.service;
 
 import com.example.entity.questionnaire.Questionnaire;
 import com.example.entity.user.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     void addUserCreatedQuestionnaire(String username, Questionnaire questionnaire);
 
