@@ -1,20 +1,17 @@
 package com.example.controller;
 
-import com.example.entity.user.User;
 import com.example.form.AuthenticationForm;
-import com.example.security.jwt.JwtTokenProvider;
-import com.example.service.UserService;
+import com.example.security.jwt.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,41 +19,39 @@ import java.util.Map;
 @RestController
 @RequestMapping("/login")
 public class AuthenticationRestController {
-    private final UserService userService;
-    private final JwtTokenProvider jwtTokenProvider;
+
     private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final UserDetailsService userDetailsService;
 
     @Autowired
-    public AuthenticationRestController(UserService userService,
-                                        JwtTokenProvider jwtTokenProvider,
-                                        AuthenticationManager authenticationManager) {
-        this.userService = userService;
-        this.jwtTokenProvider = jwtTokenProvider;
+    public AuthenticationRestController(AuthenticationManager authenticationManager,
+                                        JwtTokenUtil jwtTokenUtil,
+                                        UserDetailsService userDetailsService) {
         this.authenticationManager = authenticationManager;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userDetailsService = userDetailsService;
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping
-    public ResponseEntity login(@RequestBody AuthenticationForm authenticationForm) {
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationForm authenticationForm) {
         try {
             String username = authenticationForm.getUsername();
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, authenticationForm.getPassword()));
-            User user = userService.findByUsername(username);
 
-            if (user == null) {
-                throw new UsernameNotFoundException("User not found");
-            }
-
-            String token = jwtTokenProvider.createToken(username, user.getRoles());
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            String token = jwtTokenUtil.generateToken(userDetails);
             Map<String, String> response = new HashMap<>();
-            response.put("username", username);
             response.put("token", token);
 
             return ResponseEntity.ok(response);
 
+        } catch (UsernameNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid username or password");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
 }

@@ -6,10 +6,7 @@ import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /*
 First trying to realize registration of new user.
@@ -25,6 +22,7 @@ public class RegistrationRestController {
         this.userService = userService;
     }
 
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping
     public ResponseEntity<User> register(@RequestBody RegistrationForm registrationForm) {
         User saved = userService.register(registrationForm.composeUser());
